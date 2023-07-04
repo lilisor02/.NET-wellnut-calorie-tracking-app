@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Wellnut.Web.Models.JournalViewModel>
+@{
+    ViewBag.Title = "Journal";
+    int defaultQuantity = 100; // g
+}
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.0.min.js"></script>
+
+
+    <link rel="stylesheet" href="~/Content/css/Journal.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <script>
+        $(function () {
+            var availableTags = [];
+            $.ajax(
+                {
+                    type: 'GET',
+                    url: '/Journal/getAllFoods',
+                    success: function (response) {
+                        $.each(response, function (key, item) {
+                            availableTags.push(item.FoodName)
+                        });
+                    }
+                });
+
+            $("#SearchTerm").autocomplete({
+                source: availableTags
+            });
+        });
+    </script>
+</head>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="@Url.Action("User", "Home")"><img src="~/Content/media/logo.png" alt="Logo" height="100" width="150" /></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">@Html.ActionLink("Journal", "Index", "Journal", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("My Recipes", "Index", "MyRecipes", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Report", "Index", "Statistics", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Logout", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <table class="table table-striped" id="food-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Serving size(g)</th>
+                    <th>Energy(kcal)</th>
+                    <th>Protein</th>
+                    <th>Carbs</th>
+                    <th>Fat</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (ViewBag.SearchTerm != null)
+                {
+                    if (ViewBag.SearchTerm.Count == 0)
+                    {
+                        <div class="alert alert-danger">The food you entered is not in the database. Search a food item that is stored in the database.</div>
+                    }
+                }
+
+
+                @if (Model != null)
+                {
+                    if (Model.Count() > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            var calories = @item.ServingSize * @item.Calories / defaultQuantity;
+                            var protein = @item.ServingSize * @item.Protein / defaultQuantity;
+                            var carbs = @item.ServingSize * @item.Carbs / defaultQuantity;
+                            var fat = @item.ServingSize * @item.Fat / defaultQuantity;
+
+                            <tr>
+                                <td>@item.JournalDate.ToShortDateString()</td>
+                                <td>@item.FoodName</td>
+                                @if (ViewBag.UserHistoryId != null && @item.UserHistoryId == ViewBag.UserHistoryId)
+                                {
+                                    <td><input type="number" name="ServingSize" id="ServingSize" min="0" /><span> g</span></td>
+
+                                }
+                                else
+                                {
+                                    <td>@item.ServingSize<span> g</span></td>
+                                }
+                                <td>@calories<span> g</span></td>
+                                <td>@((int)protein)<span> g</span></td>
+                                <td>@((int)carbs)<span> g</span></td>
+                                <td>@((int)fat)<span> g</span></td>
+                                <td><input type="submit" value="Save" class="button-link" /></td>
+                                <td><input type="button" value="Cancel" class="button-link" onclick="location.href='@Url.Action("Index", "Journal")'"/></td>
+                                @*<td>@Html.ActionLink("Cancel", "Index", new { id = item.UserHistoryId })</td>*@
+                            </tr>
+
+                        }
+                    }
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+    }
+
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+
+
+</body>

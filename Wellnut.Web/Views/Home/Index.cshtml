@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Wellnut.Data.RecipeApiModel>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/css/Home.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="~/Content/media/logo.png" alt="Logo" height="100" width="150" /></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">@Html.ActionLink("About", "Index", "About", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Log in", "Index", "Login", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+    <div class="container-homepage">
+        <h1>Eat smarter.</h1>
+        <h2>Live better.</h2>
+        <p>Track your diet, exercise, and health data.</p>
+
+        <input class="button" type="button" value="SIGN UP" onclick="location.href='@Url.Action("Index", "SignUp")'" />
+    </div>
+
+    @*@if (Model != null)
+    {
+        foreach (var recipe in Model)
+        {
+            <div class="block-recipes">
+                <div>@recipe.Id</div>
+                <div>@recipe.Title</div>
+                <img src="@recipe.Picture" alt="picture" />
+            </div>
+        }
+    }*@
+
+</body>

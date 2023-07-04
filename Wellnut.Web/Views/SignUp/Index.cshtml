@@ -1,0 +1,77 @@
+﻿@model Wellnut.Web.Models.SignUpViewModel
+
+@{
+    ViewBag.Title = "SignUp";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/css/SignUp.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="~/Content/media/logo.png" alt="Logo" height="100" width="150" /></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">@Html.ActionLink("About", "Index", "About", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Log in", "Index", "Login", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        if (ViewBag.SignUpStatus != null)
+        {
+            if (ViewBag.SignUpStatus == 1)
+            {
+                <div class="alert alert-danger">An account with this email already exists</div>
+            }
+        }
+
+        <div class="form-horizontal">
+            <h1>Create account</h1>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row justify-content-center">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="group">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="group">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center">
+                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="group">
+                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <input type="submit" value="CONTINUE" class="button" />
+            <p>Already have an account? <a href="@Url.Action("Index", "Login")"><span>Log In</span></a></p>
+
+        </div>
+    }
+</body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,0 +1,149 @@
+﻿html {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F8EFF0;
+    position: relative;
+    min-height: 100%;
+    -ms-overflow-style: none;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F8EFF0;
+}
+
+h1 {
+    color: #883817;
+    font-weight: 600;
+    font-size: 40px;
+    margin-top: 70px;
+    margin-left: 140px;
+    margin-bottom: 50px;
+    text-align: left;
+    /**/
+}
+
+h3 {
+    color: #883817;
+    font-weight: 600;
+    font-size: 25px;
+    margin-top: 70px;
+    text-align: left;
+}
+
+h4 {
+    color: #883817;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 70px;
+    text-align: left;
+}
+
+p {
+    color: #883817;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 30px;
+    margin-left: 0;
+    text-align: center;
+}
+
+.button {
+    background-color: #DB8B56;
+    color: #F8E1B8;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    height: 50px;
+    width: 150px;
+    top: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+    .button:hover {
+        background-color: #F8E1B8;
+        color: #DB8B56;
+        border: 2px solid #DB8B56;
+    }
+
+.nav-item {
+    padding-right: 20px;
+}
+
+.nav-link {
+    color: #883817;
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+    .nav-link:hover {
+        color: #DB8B56;
+    }
+
+.navbar img {
+    position: relative;
+    right: 130px;
+}
+
+a {
+    color: #883817;
+}
+
+    a:hover {
+        color: #DB8B56;
+    }
+
+/*    .table {
+        width: 70px;
+    }*/
+/**/
+.form-group {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #DB8B56;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: end;
+    margin-right: 30px;
+}
+
+.group {
+    width: 300px;
+}
+
+span {
+    font-size: 15px;
+}
+
+.instruction-container {
+    background-color: #c29b8a;
+    width: 500px;
+    height: 250px;
+    margin: 50px;
+    float: right;
+    top: -40px;
+}
+
+    .instruction-container p, h2 {
+        color: #883817;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .instruction-container h2 {
+        margin-top: 40px;
+    }
+
+.total-table {
+    width: 70px;
+}

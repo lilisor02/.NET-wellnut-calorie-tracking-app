@@ -1,0 +1,156 @@
+﻿html {
+	font-size: 14px;
+	font-family: 'Montserrat', sans-serif;
+	background-color: #F8EFF0;
+	position: relative;
+	min-height: 100%;
+	-ms-overflow-style: none;
+}
+
+@media (min-width: 768px) {
+	html {
+		font-size: 16px;
+	}
+}
+
+body {
+	margin-bottom: 60px;
+	font-family: 'Montserrat', sans-serif;
+	background-color: #F8EFF0;
+}
+
+h1 {
+	color: #883817;
+	font-weight: 600;
+	font-size: 40px;
+	margin-top: 40px;
+	margin-left: 27px;
+	margin-bottom: 50px;
+	text-align: center;
+}
+
+p {
+	color: #883817;
+	font-weight: 600;
+	font-size: 15px;
+	margin-top: 30px;
+	margin-left: 0;
+	text-align: center;
+}
+
+table {
+	text-align: end;
+	margin-top: 40px;
+}
+
+	table td {
+		padding-top: 10px;
+		padding-right: 15px;
+		color: #DB8B56;
+		font-weight: 600;
+		font-size: 18px;
+	}
+
+#birthday {
+	width: 145px;
+}
+
+.info {
+	width: 50px;
+}
+
+.button {
+	background-color: #DB8B56;
+	color: #F8E1B8;
+	border: none;
+	font-size: 20px;
+	font-weight: bold;
+	height: 60px;
+	width: 150px;
+	top: 20px;
+	margin: 0 auto;
+	margin-top: 40px;
+	display: block;
+}
+
+	.button:hover {
+		background-color: #F8E1B8;
+		color: #DB8B56;
+		border: 2px solid #DB8B56;
+	}
+
+.nav-item {
+	padding-right: 20px;
+}
+
+.nav-link {
+	color: #883817;
+	font-weight: 600;
+	font-size: 20px;
+	text-transform: uppercase;
+}
+
+	.nav-link:hover {
+		color: #DB8B56;
+	}
+
+.navbar img {
+	position: relative;
+	right: 130px;
+}
+
+a {
+	color: #883817;
+}
+
+	a:hover {
+		color: #DB8B56;
+	}
+
+.form-group {
+	padding-top: 10px;
+	padding-right: 15px;
+	color: #DB8B56;
+	font-weight: 600;
+	font-size: 18px;
+	text-align: end;
+	margin-right: 30px;
+}
+
+.group {
+	width: 300px;
+}
+
+span {
+	font-size: 15px;
+}
+
+select {
+	display: block;
+	width: 100%;
+	padding: 0.375rem 0.75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border-radius: 0.375rem;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type=text] {
+	border: 1px solid black;
+}
+
+input[type=datetime] {
+	border: 1px solid black;
+}
+
+select {
+	border: 1px solid black;
+}

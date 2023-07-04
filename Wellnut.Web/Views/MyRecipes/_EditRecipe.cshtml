@@ -1,0 +1,155 @@
+﻿
+@model IEnumerable<Wellnut.Web.Models.MyRecipesViewModel>
+@{
+    ViewBag.Title = "Journal";
+    int defaultQuantity = 100; // g
+}
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.0.min.js"></script>
+
+
+    <link rel="stylesheet" href="~/Content/css/SearchRecipes.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <script>
+        $(function () {
+            var availableTags = [];
+            $.ajax(
+                {
+                    type: 'GET',
+                    url: '/MyRecipes/getAllRecipes',
+                    success: function (response) {
+                        $.each(response, function (key, item) {
+                            availableTags.push(item.RecipeName)
+                        });
+                    }
+                });
+
+            $("#SearchTerm").autocomplete({
+                source: availableTags
+            });
+        });
+    </script>
+</head>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="@Url.Action("User", "Home")"><img src="~/Content/media/logo.png" alt="Logo" height="100" width="150" /></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">@Html.ActionLink("Journal", "Index", "Journal", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("My Recipes", "Index", "MyRecipes", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Logout", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <h1>@ViewBag.RecipeName</h1>
+
+        <div class="form-horizontal">
+
+            <table class="table table-striped" id="recipe-table">
+                <thead>
+                    <tr>
+                        <th>Ingredient</th>
+                        <th>Serving size(g)</th>
+                        <th>Calories</th>
+                        <th>Protein</th>
+                        <th>Carbs</th>
+                        <th>Fat</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (Model != null)
+                    {
+                        if (Model.Count() > 0)
+                        {
+                            var sumOfCalories = 0;
+                            var sumOfProtein = 0;
+                            var sumOfCarbs = 0;
+                            var sumOfFat = 0;
+
+
+                            foreach (var item in Model)
+                            {
+                                ViewBag.UserId = item.UserInformationId;
+
+                                var calories = @item.ServingSize * @item.Calories / defaultQuantity;
+                                var protein = @item.ServingSize * @item.Protein / defaultQuantity;
+                                var carbs = @item.ServingSize * @item.Carbs / defaultQuantity;
+                                var fat = @item.ServingSize * @item.Fat / defaultQuantity;
+
+                                sumOfCalories += calories;
+                                sumOfProtein += (int)protein;
+                                sumOfCarbs += (int)carbs;
+                                sumOfFat += (int)fat;
+
+
+                                <tr>
+                                    <td>@item.FoodName</td>
+                                    <td>@item.ServingSize<span> g</span></td>
+                                    <td>@calories<span> g</span></td>
+                                    <td>@((int)protein)<span> g</span></td>
+                                    <td>@((int)carbs)<span> g</span></td>
+                                    <td>@((int)fat)<span> g</span></td>
+                                    <td><input type="button" value="Edit" class="button-link" onclick="location.href='@Url.Action("EditIngredient", "MyRecipes", new { id = item.RecipeId, name = item.FoodName })'" /></td>
+                                    <td><input type="button" value="Delete" class="button-link" onclick="return result = confirm('Are you sure you wish to delete this item?'), location.href='@Url.Action("DeleteIngredient", "MyRecipes", new { recipeId = item.RecipeId, foodId = item.FoodId })'" /></td>
+                                    @*<td><input type="button" value="Edit" class="button-link" onclick="location.href='@Url.Action("EditIngredient", "MyRecipes", new { id = item.FoodId })'" /></td>
+                                        <td><input type="button" value="Delete" class="button-link" onclick="return confirm('Are you sure you wish to delete this item?'), location.href='@Url.Action("Delete", "MyRecipes", new { id = item.FoodId })'" /></td>*@
+                                </tr>
+
+                                ViewBag.SumOfCalories = sumOfCalories;
+                                ViewBag.SumOfProtein = sumOfProtein;
+                                ViewBag.SumOfCarbs = sumOfCarbs;
+                                ViewBag.SumOfFat = sumOfFat;
+                            }
+
+                        }
+                    }
+
+                </tbody>
+            </table>
+
+            @*<h3 id="total-text">Total</h3>
+                <table class="table table-striped" id="total-table">
+                    <thead>
+                        <tr>
+                            <th>Energy(kcal)</th>
+                            <th>Protein</th>
+                            <th>Carbs</th>
+                            <th>Fat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@ViewBag.SumOfCalories<span> g</span></td>
+                            <td>@ViewBag.SumOfProtein<span> g</span></td>
+                            <td>@ViewBag.SumOfCarbs<span> g</span></td>
+                            <td>@ViewBag.SumOfFat<span> g</span></td>
+
+                        </tr>
+                    </tbody>
+                </table>*@
+
+            <div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    }
+</body>

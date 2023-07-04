@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Wellnut.Data.RecipeApiModel>
+@*@model IEnumerable<Wellnut.Web.Models.HomeViewModel>*@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.0.min.js"></script>
+
+    <link rel="stylesheet" href="~/Content/css/UserRecipe.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="@Url.Action("User", "Home")"><img src="~/Content/media/logo.png" alt="Logo" height="100" width="150" /></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">@Html.ActionLink("Journal", "Index", "Journal", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("My Recipes", "Index", "MyRecipes", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Logout", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal recipes-container">
+
+            @if (Model != null)
+            {
+                foreach (var recipe in Model)
+                {
+                    <div class="card-container">
+                        <div class="card u-clearfix">
+                            <div class="card-body">
+                                <span class="card-number card-circle subtle">@recipe.Id</span>
+                                @*<span class="card-author subtle">John Smith</span>*@
+                                <h2 class="card-title">@recipe.Title</h2>
+                                @*<span class="card-description subtle">@recipe.Instructions</span>*@
+                                @*<div class="card-read">Read</div>*@
+                                @*<input type="button" value="Read" class="card-read" onclick="location.href='@Url.Action("Recipe", "Home", new {id = recipe.Id})'" />*@
+                                @*<span class="card-tag card-circle subtle">C</span>*@
+                            </div>
+                            <img src=@recipe.Picture alt="" class="card-media" />
+                            <span class="card-description subtle instructions-title">Instructions</span>
+                            <span class="card-description subtle instructions">@recipe.Instructions</span>
+                            @*<span class="card-description subtle tags">Tags: @recipe.Tags</span>*@
+                        </div>
+                        <div class="card-shadow"></div>
+                    </div>
+
+                    <!--<div class="card-container-info">
+                        <div class="card u-clearfix">
+                            <div class="card-body">
+                                <span class="card-description subtle">Instructions</span>
+                                <span class="card-description subtle">@recipe.Instructions</span>
+                                <span class="card-description subtle">Tags: @recipe.Tags</span>-->
+                                @*<div class="card-read">Read</div>*@
+                                @*<input type="button" value="Read" class="card-read" onclick="location.href='@Url.Action("Recipe", "Home", new {id = recipe.Id})'" />*@
+                                @*<span class="card-tag card-circle subtle">C</span>*@
+                            <!--</div>
+                        </div>
+                        <div class="card-shadow"></div>
+                    </div>-->
+                }
+            }
+
+        </div>
+
+
+    }
+</body>

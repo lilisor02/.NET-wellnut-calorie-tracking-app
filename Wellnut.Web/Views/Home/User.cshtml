@@ -1,0 +1,211 @@
+﻿@model IEnumerable<Wellnut.Data.RecipeApiModel>
+@*@model IEnumerable<Wellnut.Web.Models.HomeViewModel>*@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.0.min.js"></script>
+
+    <link rel="stylesheet" href="~/Content/css/User.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="@Url.Action("User", "Home")"><img src="~/Content/media/logo.png" alt="Logo" height="100" width="150" /></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">@Html.ActionLink("Journal", "Index", "Journal", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("My Recipes", "Index", "MyRecipes", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Logout", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        $(document).ready(function () {
+            $('input[type="radio"]').click(function () {
+                if ($(this).attr('id') == 'category') {
+
+                    $('#label-category').show();
+                    $('#Category').show();
+                }
+                else {
+                    $('#label-category').hide();
+                    $('#Category').hide();
+                }
+
+                if ($(this).attr('id') == 'area') {
+
+                    $('#label-area').show();
+                    $('#Area').show();
+                }
+                else {
+                    $('#label-area').hide();
+                    $('#Area').hide();
+                }
+
+                if ($(this).attr('id') == 'ingredient') {
+
+                    $('#label-ingredient').show();
+                    $('#Ingredient').show();
+                }
+                else {
+                    $('#label-ingredient').hide();
+                    $('#Ingredient').hide();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(function () {
+            var availableTags = [];
+            $.ajax(
+                {
+                    type: 'GET',
+                    url: '/Home/getAllCategories',
+                    success: function (response) {
+                        $.each(response, function (key, item) {
+                            availableTags.push(item.Category)
+                        });
+                    }
+                });
+
+            $("#Category").autocomplete({
+                source: availableTags
+            });
+        });
+
+        $(function () {
+            var availableTags = [];
+            $.ajax(
+                {
+                    type: 'GET',
+                    url: '/Home/getAllAreas',
+                    success: function (response) {
+                        $.each(response, function (key, item) {
+                            availableTags.push(item.Area)
+                        });
+                    }
+                });
+
+            $("#Area").autocomplete({
+                source: availableTags
+            });
+        });
+
+        $(function () {
+            var availableTags = [];
+            $.ajax(
+                {
+                    type: 'GET',
+                    url: '/Home/getAllIngredients',
+                    success: function (response) {
+                        $.each(response, function (key, item) {
+                            availableTags.push(item.Ingredient)
+                        });
+                    }
+                });
+
+            $("#Ingredient").autocomplete({
+                source: availableTags
+            });
+        });
+
+
+
+    </script>
+</header>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal recipes-container">
+            <div class="form-group row">
+                <label for="SearchType" name="searchType" id="searchType" class="control-label col-sm-3">Search By:</label>
+                <div class="group">
+                    @*<select name="SearchType" id="SearchType">
+                <option value="default"></option>
+                <option value="category">Category</option>
+                <option value="area">Area</option>
+                <option value="ingredient">Ingredient</option>
+            </select>*@
+                    <input type="radio" id="category" name="searchType" value="Category">
+                    <label for="category">Category</label><br>
+
+                    <input type="radio" id="area" name="searchType" value="Area">
+                    <label for="area">Area</label><br>
+
+                    <input type="radio" id="ingredient" name="searchType" value="Ingredient">
+                    <label for="ingredient">Ingredient</label><br>
+                </div>
+
+                <div class="group  Category">
+                    <label for="Category" id="label-category" name="searchTermCategory" class="control-label col-sm-3" style='display:none'>Category:</label>
+                    <input type="text" id="Category" name="searchTermCategory" style='display:none'>
+                </div>
+
+                <div class="group Area">
+                    <label for="Area" id="label-area" name="searchTermArea" class="control-label col-sm-3" style='display:none'>Area:</label>
+                    <input type="text" id="Area" name="searchTermArea" style='display:none'>
+                </div>
+
+                <div class="group Ingredient">
+                    <label for="Ingredient" id="label-ingredient" name="searchTermIngredient" class="control-label col-sm-3" style='display:none'>Ingredient:</label>
+                    <input type="text" id="Ingredient" name="searchTermIngredient" style='display:none'>
+                </div>
+
+                <input type="submit" value="Search" class="button" />
+
+            </div>
+
+
+            @*@if (Model != null)
+                {
+                    foreach (var recipe in Model)
+                    {
+                        <div class="block-recipes">
+                            <div>@recipe.Id</div>
+                            <div>@recipe.Title</div>
+                            <img src="@recipe.Picture" alt="picture" />
+                        </div>
+                    }
+                }*@
+
+            @if (Model != null)
+            {
+                foreach (var recipe in Model)
+                {
+                    <div class="card-container">
+                        <div class="card u-clearfix">
+                            <div class="card-body">
+                                <span class="card-number card-circle subtle">@recipe.Id</span>
+                                @*<span class="card-author subtle">John Smith</span>*@
+                                <h2 class="card-title">@recipe.Title</h2>
+                                @*<span class="card-description subtle">These last few weeks I have been working hard on a new brunch recipe for you all.</span>*@
+                                <div class="card-read"></div>
+                            <input type="button" value="Read" class="card-read" onclick="location.href='@Url.Action("Recipe", "Home", new {id = recipe.Id})'" />
+                                @*<span class="card-tag card-circle subtle">C</span>*@
+                            </div>
+                            <img src=@recipe.Picture alt="" class="card-media" />
+                        </div>
+                        <div class="card-shadow"></div>
+                    </div>
+                }
+            }
+
+
+        </div>
+    }
+</body>

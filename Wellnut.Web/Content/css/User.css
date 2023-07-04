@@ -1,0 +1,242 @@
+﻿html {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F8EFF0;
+    position: relative;
+    min-height: 100%;
+    -ms-overflow-style: none;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F8EFF0;
+}
+
+h1 {
+    color: #883817;
+    font-weight: 500;
+    font-size: 65px;
+    margin-top: 50px;
+    margin-left: -50px;
+}
+
+h2 {
+    color: #DB8B56;
+    font-weight: 500;
+    font-size: 55px;
+    margin-left: -50px;
+}
+
+p {
+    color: #C29B8A;
+    font-weight: 500;
+    font-size: 35px;
+    margin-left: -50px;
+}
+
+.container-homepage {
+    padding: 70px;
+    float: left;
+    margin-left: -50px;
+}
+
+.button {
+    background-color: #DB8B56;
+    color: #F8E1B8;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-right: 10px;
+    margin-left: 0px;
+    width: 90px;
+    padding: 10px;
+    top: 20px;
+}
+
+    .button:hover {
+        background-color: #F8E1B8;
+        color: #DB8B56;
+        border: 2px solid #DB8B56;
+    }
+
+.nav-item {
+    padding-right: 20px;
+}
+
+.nav-link {
+    color: #883817;
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+    .nav-link:hover {
+        color: #DB8B56;
+    }
+
+.navbar img {
+    position: relative;
+    right: 130px;
+}
+
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.u-clearfix:before,
+.u-clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.u-clearfix:after {
+    clear: both;
+}
+
+.u-clearfix {
+    *zoom: 1;
+}
+
+.subtle {
+    color: #aaa;
+}
+
+.card-container {
+    margin: 25px auto 0;
+    position: relative;
+    width: 430px;
+    /**/ /*	display: flex;*/
+    justify-content: space-between;
+    align-content: center;
+    margin: 100px auto;
+    flex-wrap: nowrap;
+    grid-template-columns: auto auto auto;
+    display: inline-grid;
+    /*	grid-template-columns: repeat(3, 1fr);
+
+*/
+}
+
+.card {
+    background-color: #fff;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 0 5px rgba(75, 75, 75, .07);
+    z-index: 1;
+    flex-basis: 33%;
+    /*	display: grid;
+*/ /*	grid-template-columns: repeat(3, 1fr);
+*/
+}
+
+.card-body {
+    display: inline-block;
+    float: left;
+    width: 310px;
+}
+
+.card-number {
+    margin-top: 15px;
+}
+
+.card-circle {
+    border: 1px solid #aaa;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 22px;
+    font-size: 12px;
+    height: 25px;
+    text-align: center;
+    width: 50px;
+}
+
+.card-author {
+    display: block;
+    font-size: 12px;
+    letter-spacing: .5px;
+    margin: 15px 0 0;
+    text-transform: uppercase;
+}
+
+.card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+/*    line-height: 60px;*/
+    margin: 10px 0;
+    font-size: 30px;
+}
+
+.card-description {
+    display: inline-block;
+    font-weight: 300;
+    line-height: 22px;
+    margin: 10px 0;
+}
+
+.card-read {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    margin: 5px 0 20px;
+    position: relative;
+    text-align: right;
+    text-transform: uppercase;
+    border: none;
+    background-color: #fff;
+}
+
+    .card-read:after {
+        background-color: #b8bddd;
+        content: "";
+        display: block;
+        height: 1px;
+        position: absolute;
+        top: 9px;
+        width: 85%;
+    }
+
+.card-tag {
+    float: right;
+    margin: 5px 0 0;
+}
+
+.card-media {
+    float: right;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    align-content: center;
+    margin-left: 50px;
+}
+
+.card-shadow {
+    background-color: #fff;
+    box-shadow: 0 2px 25px 2px rgba(0, 0, 0, 1), 0 2px 50px 2px rgba(0, 0, 0, 1), 0 0 100px 3px rgba(0, 0, 0, .25);
+    height: 1px;
+    margin: -1px auto 0;
+    width: 80%;
+    z-index: -1;
+}
+
+#searchType {
+    color: #883817;
+    font-weight: 600;
+    font-size: 35px;
+    margin-left: -50px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+#label-category, #label-area, #label-ingredient {
+    margin-top: 30px;
+}

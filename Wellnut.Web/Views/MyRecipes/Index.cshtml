@@ -1,0 +1,105 @@
+﻿
+@model IEnumerable<Wellnut.Web.Models.MyRecipesViewModel>
+@{
+    ViewBag.Title = "Journal";
+}
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.0.min.js"></script>
+
+
+    <link rel="stylesheet" href="~/Content/css/SearchRecipes.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    @*<script>
+            $(function () {
+                var availableTags = [];
+                $.ajax(
+                    {
+                        type: 'GET',
+                        url: '/MyRecipes/getAllRecipes',
+                        success: function (response) {
+                            $.each(response, function (key, item) {
+                                availableTags.push(item.RecipeName)
+                            });
+                        }
+                    });
+
+                $("#SearchTerm").autocomplete({
+                    source: availableTags
+                });
+            });
+        </script>*@
+</head>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="@Url.Action("User", "Home")"><img src="~/Content/media/logo.png" alt="Logo" height="100" width="150" /></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">@Html.ActionLink("Journal", "Index", "Journal", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("My Recipes", "Index", "MyRecipes", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Logout", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <h1>My Recipes</h1>
+
+        if (ViewBag.RecipeCount != null && ViewBag.RecipeCount == 0)
+        {
+            <h4>You have no recipes.</h4>
+        }
+        else
+        {
+            <div class="form-horizontal">
+                <table class="table table-striped" id="recipe-table">
+                    <thead>
+                        <tr>
+                            <th>Recipe Name</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            if (Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    ViewBag.UserId = item.UserInformationId;
+
+                                    <tr>
+                                        <td>@item.RecipeName</td>
+                                        <td><input type="button" value="Details" class="button-link" onclick="location.href='@Url.Action("Details", "MyRecipes", new { name = item.RecipeName })'" /></td>
+                                        <td><input type="button" value="Edit" class="button-link" onclick="location.href='@Url.Action("Edit", "MyRecipes", new { name = item.RecipeName })'" /></td>
+                                        <td><input type="button" value="Delete" class="button-link" onclick="return confirm('Are you sure you wish to delete this item?'), location.href='@Url.Action("Delete", "MyRecipes", new { name = item.RecipeName })'" /></td>
+                                    </tr>
+                                }
+
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        }
+        <input type="button" value="ADD NEW RECIPE" class="button" onclick="location.href='@Url.Action("CreateRecipe", "MyRecipes")'" />
+
+    }
+</body>
